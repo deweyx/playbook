@@ -1,0 +1,9 @@
+---
+user: "{{ lookup('env', 'USER') }}"
+home_directory: "/Users/{{ user }}"
+
+downloads_directory: "{{ home_directory }}/.ansible/downloads"
+
+# https://www.macports.org/install.php
+macports_version: "2.9.1"
+macports_mac_release: "14-Sonoma"

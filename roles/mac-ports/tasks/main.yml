@@ -1,0 +1,18 @@
+---
+- name: Download MacPorts
+  get_url:
+    url: https://github.com/macports/macports-base/releases/download/v{{ macports_version }}/{{ macports_pkg }}
+    dest: "{{ downloads_directory }}/{{ macports_pkg }}"
+
+- name: Show current MacPorts version
+  command: port version
+  register: port_version_output
+  ignore_errors: yes
+
+- name: Install MacPorts
+  command: installer -package {{ downloads_directory }}/{{ macports_pkg }} -target /
+  become: yes
+  when: port_version_output.stdout.find(macports_version) == -1
+  # NOTE: ignore errors because this is currently hard-coded to only work on
+  # macOS 14 Sonoma.
+  ignore_errors: yes

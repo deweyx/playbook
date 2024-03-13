@@ -2,17 +2,24 @@
 - name: Configure host.
   hosts: all
 
+  vars_files:
+    - default.config.yml
+
+  roles:
+    - ansible-download-directory
+    - mac-ports
+
   tasks:
-  - name: Install a list of ports
-    community.general.macports:
-      name: "{{ ports }}"
-    become: true
-    vars:
-      ports:
-        - coreutils
-        - eza
-        - zoxide
-        - starship
-        - wget
-        - qemu
-        - htopß
+    - name: Install a list of ports
+      community.general.macports:
+        name: "{{ ports }}"
+      become: true
+      vars:
+        ports:
+          - coreutils
+          - eza
+          - zoxide
+          - starship
+          - wget
+          - qemu
+          - htop
